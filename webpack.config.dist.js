@@ -51,8 +51,7 @@ module.exports = {
             [
               'react-css-modules',
               {
-                APP_PATH
-                // generateScopedName: '[name]__[local]'
+                generateScopedName: '[name]__[local]'
               }
             ]
           ]

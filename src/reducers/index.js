@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-function getInitState(state=initState, action) {
+function getInitState(state={}, action) {
 	return state
 }
 

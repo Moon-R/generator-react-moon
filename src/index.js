@@ -14,5 +14,6 @@ const store = createStore(reducers, applyMiddleware(thunk, routerMiddleware(brow
 ReactDOM.render(
   <Provider store={store}>
   		<App />
+  		{/*router*/}
   </Provider>
   , document.querySelector('.container'));

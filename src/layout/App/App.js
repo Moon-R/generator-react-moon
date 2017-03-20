@@ -1,4 +1,5 @@
 import React from 'react';
+import Home from '../../views/Home/Home';
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -7,7 +8,10 @@ export default class App extends React.Component {
 
 	render() {
 		return (
-			<div>Hello World</div>
+			<div>
+				<h2>Hello World</h2>
+				<Home />
+			</div>
 		)
 	}
 }
