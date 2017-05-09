@@ -4,7 +4,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打�
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html
 
 var ROOT_PATH = path.resolve(__dirname);
-// const context = path.resolve(__dirname, 'src');
 var APP_PATH = path.resolve(ROOT_PATH, 'src'); //__dirname 中的src目录，以此类推
 var APP_FILE = path.resolve(APP_PATH, 'index.js'); //根目录文件app.jsx地址
 var BUILD_PATH = './bundle/dist'; //发布文件所存放的目录
@@ -22,10 +21,12 @@ module.exports = {
             'reselect',
             'jquery',
             'react-router',
-            'antd',
             'isomorphic-fetch'
         ] 
   },
+  UI: [
+    'antd'
+  ]
   output: {
     publicPath: '/dist/', //编译好的文件，在服务器的路径,这是静态资源引用路径
     path: BUILD_PATH, //编译到当前目录

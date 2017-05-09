@@ -73,21 +73,6 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     contentBase: './',
-
-    // proxy:[
-    //   {
-    //     context: ['/workorder/getList', '/workorder/getDetails','/workorder/createWo', 'workorder/addDescription', '/workorder/cancelWo'],
-    //     target: 'http://10.142.78.40:8787/',
-    //     secure: false
-    //   }
-    // ] 
-    // proxy:[
-    //   {
-    //     context: ['/workorder/getList', '/workorder/getDetails','/workorder/createWo', 'workorder/addDescription', 'docs/search', '/document/product/bao/tutorial/quick-tutorial.html'],
-    //     target: 'http://10.142.78.40:8787/',
-    //     secure: false
-    //   }
-    // ] 
   },
   plugins: [
     new webpack.DefinePlugin({
