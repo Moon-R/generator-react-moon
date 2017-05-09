@@ -3,11 +3,10 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打包
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html
 
-
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, './src'); //__dirname 中的src目录，以此类推
-var APP_FILE = path.resolve(APP_PATH, './index.js'); //根目录文件app.jsx地址
-var BUILD_PATH = path.resolve(ROOT_PATH, './bundle/dist'); //发布文件所存放的目录
+var APP_FILE = path.resolve(APP_PATH, 'index.js'); //根目录文件app.jsx地址
+var BUILD_PATH = path.resolve(ROOT_PATH, '/dev/app'); //发布文件所存放的目录
 
 
 module.exports = {
@@ -15,17 +14,18 @@ module.exports = {
     app: APP_FILE 
   },
   output: {
-    publicPath: '/bundle/dist/', //编译好的文件，在服务器的路径,这是静态资源引用路径
+    publicPath: '/dev/app/', //编译好的文件，在服务器的路径,这是静态资源引用路径
     path: BUILD_PATH, //编译到当前目录
     filename: '[name].js', //编译后的文件名字
     chunkFilename: '[name].[chunkhash:5].min.js',
   },
+  devtool: 'source-map',
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         exclude: /^node_modules$/,
-        loader: 'babel',
+        loader: ['babel'],
         query: {
           presets: ['es2015','react'],
           plugins: ['transform-decorators-legacy']
@@ -40,6 +40,7 @@ module.exports = {
             [
               'react-css-modules',
               {
+                // APP_PATH,
                 generateScopedName: '[name]__[local]'
               }
             ]
@@ -56,11 +57,11 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: [APP_PATH],
-        loader: ExtractTextPlugin.extract({ fallback: 'style', use: 'css' })
+        loader: ExtractTextPlugin.extract('style', 'css')
       }, 
       {
         include: [APP_PATH],
-        loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader?modules&localIdentName=[name]__[local]'}),
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&localIdentName=[name]__[local]'),
         test: /\.css$/
       },
       {
@@ -69,13 +70,32 @@ module.exports = {
       }
     ]
   },
+  devServer: {
+    historyApiFallback: true,
+    contentBase: './',
+
+    // proxy:[
+    //   {
+    //     context: ['/workorder/getList', '/workorder/getDetails','/workorder/createWo', 'workorder/addDescription', '/workorder/cancelWo'],
+    //     target: 'http://10.142.78.40:8787/',
+    //     secure: false
+    //   }
+    // ] 
+    // proxy:[
+    //   {
+    //     context: ['/workorder/getList', '/workorder/getDetails','/workorder/createWo', 'workorder/addDescription', 'docs/search', '/document/product/bao/tutorial/quick-tutorial.html'],
+    //     target: 'http://10.142.78.40:8787/',
+    //     secure: false
+    //   }
+    // ] 
+  },
   plugins: [
     new webpack.DefinePlugin({
         'process.env': {
             NODE_ENV: JSON.stringify('development') //定义编译环境
         }
     }),
-    new ExtractTextPlugin({ filename: '[name].css', disable: false, allChunks: true })
+    new ExtractTextPlugin('[name].css', {allChunks: true})
   ],
   resolve: {
       extensions: ['', '.js', '.jsx', '.less', '.scss', '.css'], //后缀名自动补全
